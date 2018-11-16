@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF‐8">
+    <title>Title</title>
+</head>
+<script src="/webjars/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" th:src='@{/style.js}'></script>
+<link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
+
+<body>
+<a href="javascript:void(SliderBar('slideBar', options))">滑动弹窗</a>
+<div id="slideBar"></div>
+<script type="text/javascript">
+    var options = {
+        //获取滑动验证码接口地址
+        getSliding: '/getSliding',
+        //校验滑动验证码接口地址
+        validateSliding: '/validateSliding',
+        //获取滑动验证码接口地址
+        getSlidingFail: function () {
+            console.log("getSlidingFail");
+        },
+        error: function () {
+            console.log("error");
+        },
+        success: function () {
+            console.log("show");
+        },
+        fail: function () {
+            console.log("fail");
+        }
+    };
+
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+server:
+  port: 8080
+# 缓存配置
+cache:
+  type: ehcache
+  ehcache:
+    config: classpath:ehcache-setting.xml
+
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    mode: HTML5
+    encoding: UTF-8
+    cache: false
+  mvc:
+    static-path-pattern: /**
+  resources:
+    static-locations: classpath:/static/
+
