@@ -1,4 +1,5 @@
 package com.ice.seed.slidingvalidation.Controller;
+import org.springframework.util.ResourceUtils;
 import sun.misc.BASE64Encoder;
 
 import javax.imageio.ImageIO;
@@ -64,8 +65,8 @@ public class SlidingValidation {
         }
     }
 
-    public String cutSliderImageByBase64() {
-        return cutImageByBase64(new File(srcImg), new Rectangle(x, y, l, l));
+    public String cutSliderImageByBase64()throws FileNotFoundException  {
+        return cutImageByBase64(ResourceUtils.getFile(srcImg), new Rectangle(x, y, l, l));
     }
 
     //裁剪滑块图片
@@ -259,8 +260,8 @@ public class SlidingValidation {
         }
     }
 
-    public String cutBgImageByBase64(){
-        return jointImageByBase64(new File(srcImg), destImg);
+    public String cutBgImageByBase64()throws FileNotFoundException {
+        return jointImageByBase64(ResourceUtils.getFile(srcImg), destImg);
     }
 
 
@@ -333,7 +334,7 @@ public class SlidingValidation {
      * @return
      * @throws Exception
      */
-    public static Map<String, String> getComponent(String srcImg, int x, int y, Integer l){
+    public static Map<String, String> getComponent(String srcImg, int x, int y, Integer l)throws FileNotFoundException{
         Map<String, String> imageMap = new HashMap();
         SlidingValidation slidingValidation = new SlidingValidation(srcImg, x, y, l);
         imageMap.put("slider", slidingValidation.cutSliderImageByBase64());

@@ -56,10 +56,10 @@ public class validationController {
         String redisPrefix = slidingCode + request.getSession().getId();
         Long num = getRandomNumberByRange(1D, 28D);
         System.out.println(num);
-        String path = "classpath:static/images/"+ num +".png ";
+        String path = ResourceUtils.CLASSPATH_URL_PREFIX+"static/images/"+ num +".png ";
 
        try {
-           Map<String, String> component = SlidingValidation.getComponent("D:/迅雷下载/19.png", x.intValue(), y.intValue(), L.intValue());
+           Map<String, String> component = SlidingValidation.getComponent(path, x.intValue(), y.intValue(), L.intValue());
            component.put("y", y.toString());
            EhcacheManager.put(redisPrefix, x);
            System.out.println("放入---"+x);
