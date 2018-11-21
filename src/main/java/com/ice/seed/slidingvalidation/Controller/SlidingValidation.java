@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.geom.GeneralPath;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +33,7 @@ public class SlidingValidation {
     // 生成图片路径
     private String destImg;
     // 白底图片路径
-    private final String whiteImg = "D:/迅雷下载/mh.jpg";
+    private final String whiteImg = "/static/images/mh.png";
 
 
     // 生成图片前缀
@@ -58,14 +59,18 @@ public class SlidingValidation {
 
     public void cutSliderImage() {
         try {
-            cutSliderImage(new File(srcImg), destImg, new Rectangle(x, y, l, l));
+            URL url = ClassLoader.getSystemResource("");
+            File file = new File(url.getPath()+srcImg);
+            cutSliderImage(file, destImg, new Rectangle(x, y, l, l));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public String cutSliderImageByBase64() {
-        return cutImageByBase64(new File(srcImg), new Rectangle(x, y, l, l));
+        URL url = ClassLoader.getSystemResource("");
+        File file = new File(url.getPath()+srcImg);
+        return cutImageByBase64(file, new Rectangle(x, y, l, l));
     }
 
     //裁剪滑块图片
@@ -152,14 +157,14 @@ public class SlidingValidation {
                 if (srcImg.getName().indexOf(".") > -1) {
                     suffix = srcImg.getName().substring(srcImg.getName().lastIndexOf(".") + 1);
                 }// 类型和图片后缀全部小写，然后判断后缀是否合法
-                if (suffix == null || types.toLowerCase().indexOf(suffix.toLowerCase() + ",") < 0) {
+               /* if (suffix == null || types.toLowerCase().indexOf(suffix.toLowerCase() + ",") < 0) {
                     return image;
-                }
+                }*/
                 // 将FileInputStream 转换为ImageInputStream
                 iis = ImageIO.createImageInputStream(fis);
                 // 根据图片类型获取该种类型的ImageReader
 
-                ImageReader reader = ImageIO.getImageReadersBySuffix(suffix).next();
+                ImageReader reader = ImageIO.getImageReadersBySuffix(suffix.trim()).next();
                 reader.setInput(iis, true);
                 ImageReadParam param = reader.getDefaultReadParam();
 
@@ -253,14 +258,18 @@ public class SlidingValidation {
 
     public void cutBgImage(){
         try {
-            jointImage(new File(srcImg), destImg);
+            URL url = ClassLoader.getSystemResource("");
+            File file = new File(url.getPath()+srcImg);
+            jointImage(file, destImg);
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
     public String cutBgImageByBase64(){
-        return jointImageByBase64(new File(srcImg), destImg);
+        URL url = ClassLoader.getSystemResource("");
+        File file = new File(url.getPath()+srcImg);
+        return jointImageByBase64(file, destImg);
     }
 
 
@@ -281,7 +290,9 @@ public class SlidingValidation {
                     p = p + File.separator;
 
                 BufferedImage image1 = ImageIO.read(srcImg);
-                BufferedImage image2 = getImage(new File(whiteImg), new Rectangle(0, 0, l, l));
+                URL url = ClassLoader.getSystemResource("");
+                File file = new File(url.getPath()+whiteImg);
+                BufferedImage image2 = getImage(file, new Rectangle(0, 0, l, l));
 
                 // 转成图片
                 OutputStream output = new FileOutputStream(p + DEFAULT_CUT_PREVFIX + "_bg_" + srcImg.getName());
@@ -311,7 +322,9 @@ public class SlidingValidation {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
             BufferedImage image1 = ImageIO.read(srcImg);
-            BufferedImage image2 = getImage(new File(whiteImg), new Rectangle(0, 0, l, l));
+            URL url = ClassLoader.getSystemResource("");
+            File file = new File(url.getPath()+whiteImg);
+            BufferedImage image2 = getImage(file, new Rectangle(0, 0, l, l));
             // base64图片
             ImageIO.write(jointImage(image1, image2, x, y, l), "PNG", outputStream);
         } catch (IOException e) {
