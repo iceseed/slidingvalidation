@@ -16,7 +16,7 @@ public class SlidingvalidationApplicationTests {
     public void contextLoads() throws Exception{
             File file = org.springframework.util.ResourceUtils.getFile("classpath:static/images/cut__bg_19.png");
 
-            //System.out.println(.getServletContext().getRealPath("/"));
+            //System.out.println(getServletContext().getRealPath("/"));
     }
 
 }
