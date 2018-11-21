@@ -59,8 +59,8 @@ public class SlidingValidation {
 
     public void cutSliderImage() {
         try {
-            URL url = ClassLoader.getSystemResource("");
-            File file = new File(url.getPath()+srcImg);
+            URL resource = SlidingValidation.class.getResource(srcImg);
+            File file = new File(resource.getFile());
             cutSliderImage(file, destImg, new Rectangle(x, y, l, l));
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,8 +68,8 @@ public class SlidingValidation {
     }
 
     public String cutSliderImageByBase64() {
-        URL url = ClassLoader.getSystemResource("");
-        File file = new File(url.getPath()+srcImg);
+        URL resource = SlidingValidation.class.getResource(srcImg);
+        File file = new File(resource.getFile());
         return cutImageByBase64(file, new Rectangle(x, y, l, l));
     }
 
@@ -258,8 +258,8 @@ public class SlidingValidation {
 
     public void cutBgImage(){
         try {
-            URL url = ClassLoader.getSystemResource("");
-            File file = new File(url.getPath()+srcImg);
+            URL resource = SlidingValidation.class.getResource(srcImg);
+            File file = new File(resource.getFile());
             jointImage(file, destImg);
         }catch (Exception e){
             e.printStackTrace();
@@ -267,8 +267,8 @@ public class SlidingValidation {
     }
 
     public String cutBgImageByBase64(){
-        URL url = ClassLoader.getSystemResource("");
-        File file = new File(url.getPath()+srcImg);
+        URL resource = SlidingValidation.class.getResource(srcImg);
+        File file = new File(resource.getFile());
         return jointImageByBase64(file, destImg);
     }
 
@@ -290,8 +290,8 @@ public class SlidingValidation {
                     p = p + File.separator;
 
                 BufferedImage image1 = ImageIO.read(srcImg);
-                URL url = ClassLoader.getSystemResource("");
-                File file = new File(url.getPath()+whiteImg);
+                URL resource = SlidingValidation.class.getResource(whiteImg);
+                File file = new File(resource.getFile());
                 BufferedImage image2 = getImage(file, new Rectangle(0, 0, l, l));
 
                 // 转成图片
@@ -322,8 +322,8 @@ public class SlidingValidation {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
             BufferedImage image1 = ImageIO.read(srcImg);
-            URL url = ClassLoader.getSystemResource("");
-            File file = new File(url.getPath()+whiteImg);
+            URL resource = SlidingValidation.class.getResource(whiteImg);
+            File file = new File(resource.getFile());
             BufferedImage image2 = getImage(file, new Rectangle(0, 0, l, l));
             // base64图片
             ImageIO.write(jointImage(image1, image2, x, y, l), "PNG", outputStream);

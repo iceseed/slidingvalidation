@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 
 @RunWith(SpringRunner.class)
@@ -19,10 +20,21 @@ public class SlidingvalidationApplicationTests {
     public void contextLoads() throws Exception{
             //File file = org.springframework.util.ResourceUtils.getFile("classpath:static/images/cut__bg_19.png");
         //BufferedImage read = ImageIO.read(getClass().getClassLoader().getResource("./resources/static/images/mh.png"));
-        URL url = ClassLoader.getSystemResource("");
+       /* URL url = ClassLoader.getSystemResource("");
         System.out.println(url);
         File file = new File(url.getPath()+"/static/images/mh.png");
-        System.out.println(file);
+        System.out.println(file);*/
+        SlidingvalidationApplicationTests f = new SlidingvalidationApplicationTests();
+        System.out.println(f.exists());
+    }
+
+    public File exists(){
+        URL resource = SlidingvalidationApplicationTests.class.getResource("/static/images/mh.png");
+        if(resource==null){
+            return null;
+        }
+        File f = new File(resource.getFile());
+        return f;
     }
 
 }
