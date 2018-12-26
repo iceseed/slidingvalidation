@@ -1,18 +1,14 @@
 package com.ice.seed.slidingvalidation.Controller;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.alibaba.fastjson.JSONObject;
-import org.aspectj.weaver.ast.Test;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import sun.net.www.content.image.png;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.*;
+import java.io.File;
 import java.util.Map;
 
 /**
@@ -29,16 +25,15 @@ public class validationController {
     private final Double W = 310D;
     // 图片高度
     private final Double H = 155D;
-
+    //误差值
     private final Double OFFSET = 5D;
+    //缓存前缀
     private final String slidingCode = "slidingCode:";
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String test(HttpServletRequest request, HttpServletResponse response) {
         return "slidingValidation";
     }
-
-
 
 
     /**
@@ -55,18 +50,15 @@ public class validationController {
         Long y = getRandomNumberByRange(0D, H - L);
         String redisPrefix = slidingCode + request.getSession().getId();
         Long num = getRandomNumberByRange(1D, 28D);
-        System.out.println(num);
-        String path = "/static/images/"+ num +".png ";
+        File imgFile = PictureFactory.getImgFile("static/images/"+ num +".png");
 
-       try {
-           Map<String, String> component = SlidingValidation.getComponent(path, x.intValue(), y.intValue(), L.intValue());
-           component.put("y", y.toString());
-           EhcacheManager.put(redisPrefix, x);
-           System.out.println("放入---"+x);
-           json.put("component",component);
-       }catch (Exception e){
-           e.printStackTrace();
-       }
+        Map<String, String> component = SlidingValidation.getComponent(imgFile, x.intValue(), y.intValue(), L.intValue());
+        //生成本地图片
+        //SlidingValidation.getComponent(imgFile,"F:\\Download", x.intValue(), y.intValue(), L.intValue());
+        component.put("y", y.toString());
+       EhcacheManager.put(redisPrefix, x);
+       json.put("component",component);
+
         return json.toString();
     }
 
